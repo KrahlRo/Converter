@@ -3,6 +3,7 @@ import java.util.Base64;
 
 public class Main {
     public static void main (String[] args) {
+
         System.out.println(Arrays.toString(inputText("Beispiel")));
         System.out.println(Arrays.toString(inputBase64("QmVpc3BpZWw=")));
         System.out.println(Arrays.toString(inputDecimal("66,101,105,115,112,105,101,108")));
@@ -13,36 +14,36 @@ public class Main {
 
 
 
-    public static String decimalToText(byte[] array){
+    private static String decimalToText (byte[] array) {
         return new String(array);
     }
 
-    public static byte[] textToDecimal(String text){
-        return text.getBytes();
+    private static byte[] textToDecimal (String string) {
+        return string.getBytes();
     }
 
 
-    public static String decimalToBase64(byte[] array){
+    private static String decimalToBase64 (byte[] array) {
         return Base64.getEncoder().encodeToString(array);
     }
 
-    public static byte[] base64ToDecimal(String text){
-        return Base64.getDecoder().decode(text);
+    private static byte[] base64ToDecimal (String string) {
+        return Base64.getDecoder().decode(string);
     }
 
 
-    public static String decimalToHexadecimal (byte[] array) {
-        String hexadecimalFromDecimal = "";
+    private static String decimalToHexadecimal (byte[] array) {
+        StringBuilder hexadecimalFromDecimal = new StringBuilder();
         for (byte part : array) {
-            hexadecimalFromDecimal += Integer.toHexString(part);
+            hexadecimalFromDecimal.append(Integer.toHexString(part));
             if (array[array.length - 1] != part) {
-                hexadecimalFromDecimal += ",";
+                hexadecimalFromDecimal.append(",");
             }
         }
-        return hexadecimalFromDecimal;
+        return hexadecimalFromDecimal.toString();
     }
 
-    public static byte[] hexadecimalToDecimal (String string) {
+    private static byte[] hexadecimalToDecimal (String string) {
         String[] parts = string.replaceAll(" ", "").split(",");
         byte[] decimalFromHexadecimal = new byte[parts.length];
         for (int i = 0; i < parts.length; i++) {
@@ -52,18 +53,18 @@ public class Main {
     }
 
 
-    public static String decimalToBinary (byte[] array) {
-        String binaryFromDecimal = "";
+    private static String decimalToBinary (byte[] array) {
+        StringBuilder binaryFromDecimal = new StringBuilder();
         for (byte part : array) {
-            binaryFromDecimal += String.format("%8s", Integer.toBinaryString(part)).replace(' ', '0');
-            if (array[array.length - 1] != part){
-                binaryFromDecimal += ",";
+            binaryFromDecimal.append(String.format("%8s", Integer.toBinaryString(part)).replace(' ', '0'));
+            if (array[array.length - 1] != part) {
+                binaryFromDecimal.append(",");
             }
         }
-        return binaryFromDecimal;
+        return binaryFromDecimal.toString();
     }
 
-    public static byte[] binaryToDecimal (String string) {
+    private static byte[] binaryToDecimal (String string) {
         String[] parts = string.replaceAll(" ", "").split(",");
         byte[] decimalFromBinary = new byte[parts.length];
         for (int i = 0; i < parts.length; i++) {
@@ -75,11 +76,11 @@ public class Main {
 
 
 
-    public static String ByteArrayToString (byte[] array) {
+    private static String byteArrayToString (byte[] array) {
         return (Arrays.toString(array).substring(1, Arrays.toString(array).length() - 1)).replaceAll(" ", "");
     }
 
-    public static byte[] StringToByteArray (String string) {
+    private static byte[] stringToByteArray (String string) {
         String[] parts = string.replaceAll(" ", "").split(",");
         byte[] byteArray = new byte[parts.length];
         for (int i = 0; i < parts.length; i++) {
@@ -91,9 +92,9 @@ public class Main {
 
 
 
-    public static String[] inputDecimal (String input) {
+    private static String[] inputDecimal (String input) {
         String[] outputArray = new String[5];
-        byte[] decimal = StringToByteArray(input);
+        byte[] decimal = stringToByteArray(input);
         outputArray[0] = input;
         outputArray[1] = decimalToText(decimal);
         outputArray[2] = decimalToBase64(decimal);
@@ -103,10 +104,10 @@ public class Main {
     }
 
 
-    public static String[] inputText (String input) {
+    private static String[] inputText (String input) {
         String[] outputArray = new String[5];
         byte[] decimal = textToDecimal(input);
-        outputArray[0] = ByteArrayToString(decimal);
+        outputArray[0] = byteArrayToString(decimal);
         outputArray[1] = input;
         outputArray[2] = decimalToBase64(decimal);
         outputArray[3] = decimalToHexadecimal(decimal);
@@ -115,10 +116,10 @@ public class Main {
     }
 
 
-    public static String[] inputBase64 (String input) {
+    private static String[] inputBase64 (String input) {
         String[] outputArray = new String[5];
         byte[] decimal = base64ToDecimal(input);
-        outputArray[0] = ByteArrayToString(decimal);
+        outputArray[0] = byteArrayToString(decimal);
         outputArray[1] = decimalToText(decimal);
         outputArray[2] = input;
         outputArray[3] = decimalToHexadecimal(decimal);
@@ -127,10 +128,10 @@ public class Main {
     }
 
 
-    public static String[] inputHexadecimal (String input) {
+    private static String[] inputHexadecimal (String input) {
         String[] outputArray = new String[5];
         byte[] decimal = hexadecimalToDecimal(input);
-        outputArray[0] = ByteArrayToString(decimal);
+        outputArray[0] = byteArrayToString(decimal);
         outputArray[1] = decimalToText(decimal);
         outputArray[2] = decimalToBase64(decimal);
         outputArray[3] = input;
@@ -139,10 +140,10 @@ public class Main {
     }
 
 
-    public static String[] inputBinary (String input) {
+    private static String[] inputBinary (String input) {
         String[] outputArray = new String[5];
         byte[] decimal = binaryToDecimal(input);
-        outputArray[0] = ByteArrayToString(decimal);
+        outputArray[0] = byteArrayToString(decimal);
         outputArray[1] = decimalToText(decimal);
         outputArray[2] = decimalToBase64(decimal);
         outputArray[3] = decimalToHexadecimal(decimal);
